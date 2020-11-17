@@ -14,6 +14,7 @@ public class StudentsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_students);
 
         getSupportActionBar().setTitle("Students");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
