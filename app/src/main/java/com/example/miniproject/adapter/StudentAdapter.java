@@ -1,4 +1,4 @@
-package com.example.miniproject.adapter.teacher;
+package com.example.miniproject.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,26 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.miniproject.Activities.student.SemActivity;
-import com.example.miniproject.Activities.teacher.DetailActivity;
 import com.example.miniproject.R;
 
 import java.util.List;
 
 import com.example.miniproject.models.Course;
-import com.example.miniproject.models.Subject;
+import com.example.miniproject.models.Student;
 
-public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.viewholder> {
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewholder> {
     private Context ctx;
-    private List<Subject> sub;
+    private List<Student> sub;
 
 
-    public SubjectAdapter(Context ctx, List<Subject> sub) {
+    public StudentAdapter(Context ctx, List<Student> sub) {
         this.ctx = ctx;
         this.sub = sub;
     }
@@ -33,7 +31,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.viewhold
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_course, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_student, viewGroup, false);
         return new viewholder(view, ctx, sub);
     }
 
@@ -41,6 +39,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.viewhold
     public void onBindViewHolder(@NonNull viewholder productviewholder, int i) {
         String s = sub.get(i).getName();
         productviewholder.tv_sub.setText(s);
+        productviewholder.email.setText(sub.get(i).getEmail());
 
     }
 
@@ -53,27 +52,25 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.viewhold
 
 
         Context mcxs;
-        TextView tv_sub, tv_code;
+        TextView tv_sub, email;
 
-        public viewholder(@NonNull View itemView, Context ctx, List<Subject> sub) {
+        public viewholder(@NonNull View itemView, Context ctx, List<Student> sub) {
             super(itemView);
             this.mcxs = ctx;
             tv_sub = itemView.findViewById(R.id.sub);
-            itemView.setOnClickListener(this);
+            email = itemView.findViewById(R.id.email);
+            //itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             int pos = getAdapterPosition();
             int s = sub.get(pos).getId();
-            if (sub.get(pos).isActive()) {
-                Intent intent = new Intent(this.mcxs, DetailActivity.class);
-                intent.putExtra("sub", s);
-                intent.putExtra("name", sub.get(pos).getName());
-                view.getContext().startActivity(intent);
-            } else {
-                Toast.makeText(view.getContext(), "Waiting For Approval", Toast.LENGTH_LONG).show();
-            }
+            Intent intent = new Intent(this.mcxs, SemActivity.class);
+            ;
+            intent.putExtra("sub", s);
+            intent.putExtra("name", sub.get(pos).getName());
+            view.getContext().startActivity(intent);
         }
     }
 }

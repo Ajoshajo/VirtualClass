@@ -6,14 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.miniproject.Db;
 import com.example.miniproject.R;
-import com.example.miniproject.adapter.CourseAdapter;
-import com.example.miniproject.adapter.StudentAdapter;
-import com.example.miniproject.models.Course;
-import com.example.miniproject.models.Student;
+import com.example.miniproject.adapter.admin.SubjectAdapter;
+import com.example.miniproject.models.Subject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,30 +19,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentsActivity extends AppCompatActivity {
+public class SubRequestActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private List<Student> studentList;
-    private StudentAdapter studentAdapter;
+    private SubjectAdapter subjectAdapter;
+    private List<Subject> subjectList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_students);
+        setContentView(R.layout.activity_admin_sub_request);
 
-        getSupportActionBar().setTitle("Students");
-
+        getSupportActionBar().setTitle("Subjects");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         recyclerView = findViewById(R.id.recyclerview);
-        studentList = new ArrayList<>();
+        subjectList = new ArrayList<>();
         loadData();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        studentAdapter = new StudentAdapter(this, studentList);
-        recyclerView.setAdapter(studentAdapter);
-        Log.d("l", studentAdapter.getItemCount() + "");
+        subjectAdapter = new SubjectAdapter(this, subjectList);
+        recyclerView.setAdapter(subjectAdapter);
     }
 
     @Override
@@ -64,11 +58,14 @@ public class StudentsActivity extends AppCompatActivity {
                     try {
                         con = Db.getCon();
                         String sql;
-                        sql = "SELECT * FROM student where id > 0";
+                        sql = "SELECT teachersub.sub as id,sub.name,teacher.id as teacher,teacher.name as teachername FROM teachersub join teacher JOIN sub where teachersub.active=0 and teacher.id=teachersub.teacher and sub.id=teachersub.sub";
                         PreparedStatement prest = con.prepareStatement(sql);
                         ResultSet rs = prest.executeQuery();
                         while (rs.next()) {
-                            studentList.add(new Student(rs.getInt("id"), rs.getString("name"), rs.getString("email")));
+                            Subject s = new Subject(rs.getInt("id"), rs.getString("name"));
+                            s.setTeacher(rs.getString("teachername"));
+                            s.setTeacherId(rs.getInt("teacher"));
+                            subjectList.add(s);
                         }
                         prest.close();
                         con.close();
@@ -82,4 +79,5 @@ public class StudentsActivity extends AppCompatActivity {
         });
         thread.start();
     }
+
 }

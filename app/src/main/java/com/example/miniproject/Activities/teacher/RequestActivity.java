@@ -110,7 +110,7 @@ public class RequestActivity extends AppCompatActivity {
                     try {
                         con = Db.getCon();
                         String sql;
-                        sql = "SELECT * FROM `sub` where id not in (SELECT sub from teachersub WHERE teacher = " + teacher + ")";
+                        sql = "SELECT * FROM `sub` where id not in (SELECT sub from teachersub)";
                         PreparedStatement prest = con.prepareStatement(sql);
                         ResultSet rs = prest.executeQuery();
                         while (rs.next()) {

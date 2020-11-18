@@ -1,6 +1,7 @@
-package com.example.miniproject.Activities.student;
+package com.example.miniproject.Activities.teacher;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +17,9 @@ import android.widget.Toast;
 import com.example.miniproject.Db;
 import com.example.miniproject.R;
 import com.example.miniproject.adapter.ChatAdapter;
+import com.example.miniproject.adapter.teacher.SubjectAdapter;
 import com.example.miniproject.models.Chat;
+import com.example.miniproject.models.Course;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,11 +30,10 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private int id;
+    private int id, teacher;
     private String name;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private int student;
     private RecyclerView recyclerView;
     private List<Chat> chatList;
     private ChatAdapter chatAdapter;
@@ -41,19 +43,19 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_detail);
+        setContentView(R.layout.activity_teacher_detail);
         Intent intent = getIntent();
         id = intent.getIntExtra("sub", 0);
         name = intent.getStringExtra("name");
         getSupportActionBar().setTitle(name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         recyclerView = findViewById(R.id.recyclerview);
         send = findViewById(R.id.send);
         msg = findViewById(R.id.msg);
-        sharedPreferences = getApplicationContext().getSharedPreferences("student", 0);
-        //editor = sharedPreferences.edit();
-        student = sharedPreferences.getInt("id", 0);
+        sharedPreferences = getApplicationContext().getSharedPreferences("teacher", 0);
+        teacher = sharedPreferences.getInt("id", 0);
 
         recyclerView = findViewById(R.id.recyclerview);
         chatList = new ArrayList<>();
@@ -69,7 +71,6 @@ public class DetailActivity extends AppCompatActivity {
                 msg.setText("");
             }
         });
-
     }
 
     @Override
@@ -132,7 +133,7 @@ public class DetailActivity extends AppCompatActivity {
                     try {
                         con = Db.getCon();
                         String sql;
-                        sql = "insert into chat values (null," + student + ",(select id from teachersub where sub=" + id + "),0,'" + msg + "')";
+                        sql = "insert into chat values (null,0,(select id from teachersub where teacher=" + teacher + " and sub=" + id + "),0,'" + msg + "')";
                         Log.d("v", sql);
                         PreparedStatement prest = con.prepareStatement(sql);
                         int rs = prest.executeUpdate();
@@ -159,5 +160,4 @@ public class DetailActivity extends AppCompatActivity {
         });
         thread.start();
     }
-
 }

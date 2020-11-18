@@ -50,30 +50,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/logoutr"
-                        android:layout_margin="10dp"
-                        app:cardElevation="10dp"
-                        app:cardCornerRadius="30dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:contentPadding="20dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Logout"/>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <androidx.cardview.widget.CardView
                         android:layout_margin="10dp"
                         app:cardElevation="10dp"
                         app:cardCornerRadius="30dp"
@@ -89,6 +65,13 @@
                             android:text="Request Subjects"/>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:weightSum="2">
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

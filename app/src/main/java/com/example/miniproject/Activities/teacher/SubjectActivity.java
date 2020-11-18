@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.miniproject.Db;
 import com.example.miniproject.R;
@@ -67,7 +68,7 @@ public class SubjectActivity extends AppCompatActivity {
                     try {
                         con = Db.getCon();
                         String sql;
-                        sql = "SELECT * FROM teachersub join sub WHERE teachersub.teacher =" + teacher + " and sub.id=teachersub.sub";
+                        sql = "SELECT sub.id,sub.name,teachersub.active FROM teachersub join sub WHERE teachersub.teacher =" + teacher + " and sub.id=teachersub.sub";
                         PreparedStatement prest = con.prepareStatement(sql);
                         ResultSet rs = prest.executeQuery();
                         while (rs.next()) {

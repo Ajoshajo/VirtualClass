@@ -4,6 +4,8 @@ public class Subject {
     int id;
     String name;
     boolean active;
+    String teacher;
+    int teacherId;
 
     public Subject(int id, String name) {
         this.id = id;
@@ -15,8 +17,24 @@ public class Subject {
         return name;
     }
 
+    public int getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(int teacherId) {
+        this.teacherId = teacherId;
+    }
+
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
     }
 
     public boolean isActive() {

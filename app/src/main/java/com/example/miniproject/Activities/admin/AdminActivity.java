@@ -12,7 +12,7 @@ import com.example.miniproject.R;
 
 public class AdminActivity extends AppCompatActivity {
 
-    private CardView students;
+    private CardView students, teachers, subreq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,8 @@ public class AdminActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Admin Home");
 
         students = findViewById(R.id.students);
+        teachers = findViewById(R.id.teachers);
+        subreq = findViewById(R.id.subreq);
 
         students.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,6 +30,21 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(new Intent(AdminActivity.this, StudentsActivity.class));
             }
         });
+
+        teachers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminActivity.this, TeachersActivity.class));
+            }
+        });
+
+        subreq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminActivity.this, SubRequestActivity.class));
+            }
+        });
+
     }
 
     @Override
