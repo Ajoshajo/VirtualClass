@@ -88,13 +88,13 @@ public class DetailActivity extends AppCompatActivity {
                     try {
                         con = Db.getCon();
                         String sql;
-                        sql = "SELECT chat.id,chat.msg,chat.type,teacher.id as teacherid,teacher.name as teacher,student.id as studentid,student.name as student FROM `chat` join teachersub join teacher join student WHERE (teachersub.id=chat.teachersub AND teacher.id=teachersub.teacher) and student.id=chat.student and teachersub.sub=" + id;
+                        sql = "SELECT chat.id,chat.active,chat.msg,chat.type,teacher.id as teacherid,teacher.name as teacher,student.id as studentid,student.name as student FROM `chat` join teachersub join teacher join student WHERE (teachersub.id=chat.teachersub AND teacher.id=teachersub.teacher) and student.id=chat.student and chat.active=1 and teachersub.sub=" + id;
                         PreparedStatement prest = con.prepareStatement(sql);
                         ResultSet rs = prest.executeQuery();
                         Log.d("q", sql);
                         chatList.clear();
                         while (rs.next()) {
-                            Chat c = new Chat(1, rs.getString("msg"), rs.getInt("teacherid"), rs.getString("teacher"), rs.getInt("studentid"), rs.getString("student"), rs.getInt("type"));
+                            Chat c = new Chat(1, rs.getString("msg"), rs.getInt("teacherid"), rs.getString("teacher"), rs.getInt("studentid"), rs.getString("student"), rs.getInt("type"), rs.getInt("active") == 1);
                             if (rs.getString("student") == null) {
                                 c.setIsteacher(true);
                             }

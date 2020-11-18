@@ -1,9 +1,9 @@
 package com.example.miniproject.models;
 
 public class Chat {
-    static String MSG = "msg";
-    static String PDF = "pdf";
-    static String VIDEO = "video";
+    public static String MSG = "msg";
+    public static String PDF = "Pdf / Video";
+    public static String VIDEO = "Video";
     int id;
     String msg;
     int teacherId;
@@ -12,8 +12,9 @@ public class Chat {
     String teacher;
     int type;
     Boolean isteacher;
+    boolean active;
 
-    public Chat(int id, String msg, int teacherId, String teacher, int studentId, String student, int type) {
+    public Chat(int id, String msg, int teacherId, String teacher, int studentId, String student, int type,boolean active) {
         this.id = id;
         this.msg = msg;
         this.teacherId = teacherId;
@@ -21,7 +22,16 @@ public class Chat {
         this.type = type;
         this.studentId = studentId;
         this.student = student;
+        this.active = active;
         isteacher = false;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Boolean getIsteacher() {

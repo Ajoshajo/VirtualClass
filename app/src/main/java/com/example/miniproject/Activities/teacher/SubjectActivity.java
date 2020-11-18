@@ -46,8 +46,6 @@ public class SubjectActivity extends AppCompatActivity {
         loadData();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        subjectAdapter = new SubjectAdapter(this, subjectList);
-        recyclerView.setAdapter(subjectAdapter);
 
 
     }
@@ -78,6 +76,13 @@ public class SubjectActivity extends AppCompatActivity {
                             }
                             subjectList.add(s);
                         }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                subjectAdapter = new SubjectAdapter(SubjectActivity.this, subjectList);
+                                recyclerView.setAdapter(subjectAdapter);
+                            }
+                        });
                         prest.close();
                         con.close();
                     } catch (SQLException e) {
